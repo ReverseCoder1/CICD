@@ -10,27 +10,27 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                bat 'docker-compose build'
+                sh 'docker-compose build'
             }
         }
 
         stage('Run Containers') {
             steps {
-                bat 'docker-compose up -d'
+                sh 'docker-compose up -d'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'echo Running tests...'
+                sh 'echo Running tests...'
                 // Replace with actual test commands like:
-                // bat 'pytest test_sample.py -v'
+                // sh 'pytest test_sample.py -v'
             }
         }
 
         stage('Cleanup') {
             steps {
-                bat 'docker-compose down'
+                sh 'docker-compose down'
             }
         }
     }
@@ -41,4 +41,5 @@ pipeline {
         }
     }
 }
+
 
