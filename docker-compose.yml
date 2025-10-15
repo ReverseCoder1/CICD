@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db_app:
+    build: ./dbapp
+    container_name: iris_db_app
+    ports:
+      - "5001:5001"
+    volumes:
+      - db_data:/app/data
+    networks:
+      - iris_network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5001/records')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web_app:
+    build: ./webapp
+    container_name: iris_web_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db_app
+    environment:
+      - DB_APP_URL=http://db_app:5001
+    networks:
+      - iris_network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  iris_network:
+    driver: bridge
