@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 echo 'Checking out code from GitHub...'
-                git branch: 'main', url: 'https://github.com/RonitKorat/CICD_Jenikins.git'
+                git branch: 'main', url: 'https://github.com/ReverseCoder1/CICD.git'
             }
         }
 
